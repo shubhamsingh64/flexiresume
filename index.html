@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>flexiResume – AI-Powered Hiring Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #028090;
+    --teal-dark: #015f6d;
+    --teal-light: #e0f4f7;
+    --teal-mid: #02c39a;
+    --charcoal: #0f1923;
+    --charcoal-2: #1a2632;
+    --charcoal-3: #243040;
+    --off-white: #f5f3ee;
+    --warm-white: #faf9f6;
+    --muted: #8a9aaa;
+    --muted-2: #cdd5db;
+    --accent: #02c39a;
+    --accent-glow: rgba(2,195,154,0.15);
+    --text-primary: #0f1923;
+    --text-secondary: #4a6070;
+    --border: rgba(2,128,144,0.15);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(245,243,238,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.35rem;
+    color: var(--charcoal);
+    letter-spacing: -0.03em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--teal); }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-cta {
+    background: var(--charcoal) !important;
+    color: #fff !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    font-weight: 500 !important;
+    font-size: 0.875rem !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--teal-dark) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(2,128,144,0.25);
+  }
+  .hero-tag::before {
+    content: '';
+    width: 7px; height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .hero-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 3.8rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--charcoal);
+    margin-bottom: 1.5rem;
+  }
+  .hero-heading .teal { color: var(--teal); }
+  .hero-heading .underline-accent {
+    position: relative; display: inline-block;
+  }
+  .hero-heading .underline-accent::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    max-width: 480px;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--charcoal);
+    color: #fff;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--teal-dark); transform: translateY(-1px); }
+  .btn-secondary {
+    color: var(--charcoal);
+    padding: 0.85rem 1.75rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 400;
+    text-decoration: none;
+    border: 1.5px solid var(--muted-2);
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem; padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    letter-spacing: -0.03em;
+  }
+  .stat-num .accent { color: var(--teal); }
+  .stat-label { font-size: 0.8rem; color: var(--muted); font-weight: 400; margin-top: 0.1rem; }
+
+  /* Hero visual */
+  .hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .dashboard-mock {
+    background: var(--charcoal);
+    border-radius: 16px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 40px 80px rgba(15,25,35,0.2), 0 0 0 1px rgba(255,255,255,0.05);
+    position: relative;
+    overflow: hidden;
+  }
+  .dashboard-mock::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--accent));
+  }
+  .mock-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 1.25rem;
+  }
+  .mock-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem; font-weight: 600; color: var(--muted);
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .mock-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  .mock-pipeline {
+    display: flex; gap: 0.5rem; margin-bottom: 1rem; overflow: hidden;
+  }
+  .pipeline-stage {
+    flex: 1; text-align: center; padding: 0.5rem 0.25rem;
+    border-radius: 6px; font-size: 0.65rem; font-weight: 500;
+  }
+  .ps-applied { background: rgba(2,128,144,0.2); color: #5dd6e8; }
+  .ps-screen { background: rgba(2,195,154,0.15); color: #02c39a; }
+  .ps-interview { background: rgba(250,189,117,0.15); color: #fabd75; }
+  .ps-offer { background: rgba(74,208,137,0.2); color: #4ad089; }
+  .ps-hired { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); }
+  .pipeline-stage .ps-count { font-size: 1rem; font-weight: 700; display: block; margin-bottom: 0.15rem; }
+  .mock-candidates { display: flex; flex-direction: column; gap: 0.6rem; }
+  .candidate-row {
+    display: flex; align-items: center; gap: 0.75rem;
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px; padding: 0.65rem 0.85rem;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .cand-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; font-weight: 600; flex-shrink: 0;
+  }
+  .cand-info { flex: 1; min-width: 0; }
+  .cand-name { font-size: 0.75rem; font-weight: 500; color: rgba(255,255,255,0.85); }
+  .cand-role { font-size: 0.65rem; color: var(--muted); }
+  .cand-score {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem; font-weight: 700;
+    padding: 0.2rem 0.5rem; border-radius: 5px;
+  }
+  .score-high { background: rgba(2,195,154,0.2); color: #02c39a; }
+  .score-mid { background: rgba(250,189,117,0.2); color: #fabd75; }
+  .mock-ai-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: rgba(2,195,154,0.1); border: 1px solid rgba(2,195,154,0.3);
+    color: var(--accent); font-size: 0.65rem; font-weight: 500;
+    padding: 0.35rem 0.75rem; border-radius: 100px; margin-top: 1rem;
+  }
+
+  /* SECTION WRAPPER */
+  section { padding: 6rem 2rem; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    display: inline-block;
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 1rem;
+  }
+  .section-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700; letter-spacing: -0.03em;
+    color: var(--charcoal); line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+  .section-sub {
+    font-size: 1rem; font-weight: 300;
+    color: var(--text-secondary); line-height: 1.75;
+    max-width: 560px;
+  }
+
+  /* PROBLEM SECTION */
+  .problem-section { background: var(--charcoal); color: #fff; }
+  .problem-section .section-label { color: var(--accent); }
+  .problem-section .section-heading { color: #fff; }
+  .problem-section .section-sub { color: var(--muted); }
+  .problem-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1.5px; margin-top: 3.5rem;
+    background: rgba(255,255,255,0.08);
+    border-radius: 12px; overflow: hidden;
+  }
+  .problem-card {
+    background: var(--charcoal);
+    padding: 2.5rem 2rem;
+    position: relative;
+  }
+  .problem-card::before {
+    content: '';
+    position: absolute; top: 0; left: 2rem; right: 2rem;
+    height: 1px; background: rgba(255,255,255,0.08);
+  }
+  .problem-icon {
+    width: 42px; height: 42px; border-radius: 10px;
+    background: rgba(2,128,144,0.15);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+    border: 1px solid rgba(2,128,144,0.3);
+  }
+  .problem-icon svg { width: 20px; height: 20px; stroke: var(--teal); fill: none; stroke-width: 1.75; }
+  .problem-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 700; color: #fff;
+    margin-bottom: 0.75rem; letter-spacing: -0.02em;
+  }
+  .problem-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+  /* SOLUTIONS */
+  .solutions-section { background: var(--warm-white); }
+  .solutions-tabs {
+    display: flex; gap: 0; margin-top: 3rem;
+    border-radius: 10px; overflow: hidden;
+    border: 1.5px solid var(--muted-2);
+    width: fit-content;
+  }
+  .stab {
+    padding: 0.65rem 1.5rem;
+    font-size: 0.875rem; font-weight: 400;
+    background: transparent; color: var(--text-secondary);
+    border: none; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    border-right: 1px solid var(--muted-2);
+  }
+  .stab:last-child { border-right: none; }
+  .stab.active { background: var(--charcoal); color: #fff; font-weight: 500; }
+  .solutions-content { margin-top: 2.5rem; }
+  .sol-panel { display: none; }
+  .sol-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .sol-features { display: flex; flex-direction: column; gap: 1.25rem; }
+  .sol-feature {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.25rem; border-radius: 10px;
+    border: 1px solid var(--border);
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .sol-feature:hover { border-color: var(--teal); box-shadow: 0 4px 20px rgba(2,128,144,0.08); }
+  .sol-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--teal-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .sol-icon svg { width: 18px; height: 18px; stroke: var(--teal); fill: none; stroke-width: 1.75; }
+  .sol-feature h4 { font-size: 0.9rem; font-weight: 500; color: var(--charcoal); margin-bottom: 0.3rem; }
+  .sol-feature p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; font-weight: 300; }
+  .sol-visual-box {
+    background: var(--charcoal);
+    border-radius: 16px; padding: 2rem;
+    min-height: 360px; display: flex; flex-direction: column;
+    justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+  .sol-visual-box::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--teal), var(--accent));
+  }
+  .sol-viz-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .sol-viz-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem; font-weight: 700; color: #fff; letter-spacing: -0.03em;
+    margin-top: 0.5rem;
+  }
+  .sol-viz-heading span { color: var(--accent); }
+  .funnel-stages { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem; }
+  .funnel-row { display: flex; align-items: center; gap: 0.75rem; }
+  .funnel-bar-bg { flex: 1; height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
+  .funnel-bar { height: 100%; border-radius: 4px; background: var(--teal); transition: width 0.5s; }
+  .funnel-label { font-size: 0.7rem; color: var(--muted); min-width: 80px; text-align: right; }
+  .funnel-count { font-size: 0.7rem; color: rgba(255,255,255,0.5); min-width: 24px; }
+
+  /* WORKFLOW */
+  .workflow-section { background: #f0f6f8; }
+  .workflow-steps {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    gap: 0; margin-top: 3.5rem;
+    position: relative;
+  }
+  .workflow-steps::before {
+    content: ''; position: absolute;
+    top: 30px; left: 8.33%; right: 8.33%;
+    height: 1px; background: var(--teal);
+    opacity: 0.3;
+  }
+  .wstep { text-align: center; padding: 0 0.75rem; }
+  .wstep-num {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: #fff; border: 2px solid var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 700; color: var(--teal);
+    margin: 0 auto 1rem;
+    position: relative; z-index: 1;
+    transition: background 0.2s;
+  }
+  .wstep:hover .wstep-num { background: var(--teal); color: #fff; }
+  .wstep-title { font-size: 0.8rem; font-weight: 500; color: var(--charcoal); margin-bottom: 0.4rem; }
+  .wstep-desc { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.5; font-weight: 300; }
+  .wstep-phase {
+    font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--teal); margin-bottom: 0.6rem;
+  }
+
+  /* COMPARISON */
+  .comparison-section { background: var(--warm-white); }
+  .comparison-table-wrap { margin-top: 3rem; overflow-x: auto; border-radius: 12px; border: 1.5px solid var(--muted-2); }
+  table.comp { width: 100%; border-collapse: collapse; }
+  .comp th { padding: 1rem 1.25rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+  .comp td { padding: 1rem 1.25rem; font-size: 0.875rem; border-top: 1px solid #eee; vertical-align: top; }
+  .comp thead tr { background: var(--charcoal); }
+  .comp th:first-child { color: var(--muted); text-align: left; }
+  .comp th:nth-child(2) { color: var(--muted); text-align: center; }
+  .comp th:nth-child(3) { color: var(--muted); text-align: center; }
+  .comp th:last-child { color: var(--accent); text-align: center; }
+  .comp td:first-child { font-weight: 500; color: var(--charcoal); }
+  .comp td:nth-child(2), .comp td:nth-child(3) { color: var(--text-secondary); text-align: center; font-weight: 300; font-size: 0.825rem; }
+  .comp td:last-child { text-align: center; color: var(--teal-dark); font-weight: 500; font-size: 0.825rem; }
+  .comp tr:nth-child(even) td { background: #fafaf8; }
+  .comp tr:hover td { background: var(--teal-light); }
+  .check { color: var(--accent); font-size: 1rem; }
+  .cross { color: #ddd; font-size: 0.9rem; }
+  .col-highlight { background: rgba(2,128,144,0.04) !important; }
+
+  /* SECURITY */
+  .security-section { background: var(--charcoal); color: #fff; }
+  .security-section .section-label { color: var(--accent); }
+  .security-section .section-heading { color: #fff; }
+  .security-section .section-sub { color: var(--muted); }
+  .security-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+  .sec-card {
+    background: var(--charcoal-2); border-radius: 12px;
+    padding: 2rem 1.75rem; border: 1px solid rgba(255,255,255,0.06);
+    transition: border-color 0.2s;
+  }
+  .sec-card:hover { border-color: rgba(2,128,144,0.5); }
+  .sec-card-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+  .sec-card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 0.65rem; letter-spacing: -0.02em; }
+  .sec-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, var(--teal) 0%, #015066 100%);
+    color: #fff; text-align: center; padding: 7rem 2rem;
+  }
+  .cta-section .section-label { color: rgba(255,255,255,0.6); }
+  .cta-section .section-heading { color: #fff; max-width: 700px; margin: 0 auto 1.25rem; }
+  .cta-section .section-sub { color: rgba(255,255,255,0.7); margin: 0 auto 2.5rem; }
+  .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .cta-email { margin-top: 1.5rem; font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+  .cta-email a { color: rgba(255,255,255,0.9); }
+  .btn-cta-primary {
+    background: #fff; color: var(--teal-dark);
+    padding: 0.9rem 2.25rem; border-radius: 8px;
+    font-size: 0.95rem; font-weight: 600; text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .btn-cta-secondary {
+    border: 1.5px solid rgba(255,255,255,0.5); color: #fff;
+    padding: 0.9rem 2rem; border-radius: 8px;
+    font-size: 0.95rem; font-weight: 400; text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-cta-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+
+  /* FOOTER */
+  footer {
+    background: var(--charcoal); color: var(--muted);
+    padding: 3rem 2rem; text-align: center; font-size: 0.825rem;
+  }
+  footer .footer-logo {
+    font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800;
+    color: #fff; letter-spacing: -0.03em; margin-bottom: 0.75rem;
+  }
+  footer .footer-logo span { color: var(--teal); }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--teal); }
+  .footer-links { display: flex; gap: 2rem; justify-content: center; margin: 1rem 0 1.5rem; flex-wrap: wrap; }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.6s ease both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding-top: 80px; }
+    .hero-visual { display: none; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .sol-panel.active { grid-template-columns: 1fr; }
+    .sol-visual-box { display: none; }
+    .workflow-steps { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .workflow-steps::before { display: none; }
+    .security-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    .workflow-steps { grid-template-columns: repeat(2, 1fr); }
+    .hero-stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="#" class="nav-logo">flexi<span>Resume</span></a>
+  <div class="nav-links">
+    <a href="#solutions">Solutions</a>
+    <a href="#workflow">How it Works</a>
+    <a href="#compare">Compare</a>
+    <a href="#security">Security</a>
+    <a href="#contact" class="nav-cta">Get Early Access</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-tag fade-up">AI-Powered Hiring · Built for Startups</div>
+    <h1 class="hero-heading fade-up delay-1">
+      Hire smarter.<br>
+      <span class="underline-accent">40–60% faster</span><br>
+      with <span class="teal">AI.</span>
+    </h1>
+    <p class="hero-sub fade-up delay-2">
+      flexiResume centralises your entire recruitment lifecycle — from AI-assisted job posting to encrypted onboarding — into a single, streamlined dashboard designed for lean teams.
+    </p>
+    <div class="hero-actions fade-up delay-3">
+      <a href="#contact" class="btn-primary">Start Free Trial</a>
+      <a href="#solutions" class="btn-secondary">See how it works →</a>
+    </div>
+    <div class="hero-stats fade-up delay-3">
+      <div>
+        <div class="stat-num">40<span class="accent">–</span>60<span style="font-size:1.1rem">%</span></div>
+        <div class="stat-label">Faster time-to-hire</div>
+      </div>
+      <div>
+        <div class="stat-num">9<span style="font-size:1.2rem; color:var(--teal)"> stages</span></div>
+        <div class="stat-label">Full funnel tracking</div>
+      </div>
+      <div>
+        <div class="stat-num">1<span style="font-size:1.2rem; color:var(--teal)"> screen</span></div>
+        <div class="stat-label">Entire hiring lifecycle</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Mock -->
+  <div class="hero-visual">
+    <div class="dashboard-mock fade-up delay-2">
+      <div class="mock-header">
+        <span class="mock-title">Live Pipeline — Senior Dev</span>
+        <div class="mock-dot"></div>
+      </div>
+      <div class="mock-pipeline">
+        <div class="pipeline-stage ps-applied">
+          <span class="ps-count">142</span>Applied
+        </div>
+        <div class="pipeline-stage ps-screen">
+          <span class="ps-count">38</span>Screened
+        </div>
+        <div class="pipeline-stage ps-interview">
+          <span class="ps-count">11</span>Interview
+        </div>
+        <div class="pipeline-stage ps-offer">
+          <span class="ps-count">3</span>Offer
+        </div>
+        <div class="pipeline-stage ps-hired">
+          <span class="ps-count">1</span>Hired
+        </div>
+      </div>
+      <div style="font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.6rem;">AI-Ranked Candidates</div>
+      <div class="mock-candidates">
+        <div class="candidate-row">
+          <div class="cand-avatar" style="background:rgba(2,195,154,0.15); color:#02c39a;">PR</div>
+          <div class="cand-info">
+            <div class="cand-name">Priya Rao</div>
+            <div class="cand-role">React · 5 yrs · Bengaluru</div>
+          </div>
+          <div class="cand-score score-high">94%</div>
+        </div>
+        <div class="candidate-row">
+          <div class="cand-avatar" style="background:rgba(2,128,144,0.15); color:#5dd6e8;">AM</div>
+          <div class="cand-info">
+            <div class="cand-name">Arjun Mehta</div>
+            <div class="cand-role">Node.js · 4 yrs · Delhi</div>
+          </div>
+          <div class="cand-score score-high">88%</div>
+        </div>
+        <div class="candidate-row">
+          <div class="cand-avatar" style="background:rgba(250,189,117,0.15); color:#fabd75;">SK</div>
+          <div class="cand-info">
+            <div class="cand-name">Sara Khan</div>
+            <div class="cand-role">Full Stack · 3 yrs · Mumbai</div>
+          </div>
+          <div class="cand-score score-mid">73%</div>
+        </div>
+      </div>
+      <div class="mock-ai-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        AI match score · Auto-ranked
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM SECTION -->
+<section class="problem-section" id="problem">
+  <div class="container">
+    <span class="section-label">The Problem</span>
+    <h2 class="section-heading">Hiring is broken<br>for small teams.</h2>
+    <p class="section-sub">Enterprise tools are expensive and bloated. Manual processes are slow and chaotic. We built flexiResume because we lived this problem firsthand running our own IT services firm.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/></svg>
+        </div>
+        <h3>Enterprise Overkill & Cost Barrier</h3>
+        <p>Platforms like LinkedIn, Workday, and Greenhouse cost $5k–$20k+ annually — priced for corporations with features irrelevant to smaller teams. Most startups simply can't afford them.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </div>
+        <h3>Fragmentation & Information Silos</h3>
+        <p>Resumes scatter across email folders, spreadsheets, and Slack. Without a centralised process, tracking candidate status becomes a guessing game of disconnected threads.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>The Efficiency Bottleneck</h3>
+        <p>HR teams spend excessive hours on manual shortlisting and basic screening calls. Slow time-to-hire leads to missed deadlines and lost talent in competitive markets.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>The Candidate "Black Hole"</h3>
+        <p>Poor communication leaves candidates in the dark, destroying your employer brand. 73% of candidates never hear back — creating lasting negative sentiment about your company.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS SECTION -->
+<section class="solutions-section" id="solutions">
+  <div class="container">
+    <span class="section-label">Our Solution</span>
+    <h2 class="section-heading">Three powerful products.<br>One unified platform.</h2>
+    <p class="section-sub">flexiResume offers a comprehensive suite of tools designed to optimise every aspect of your hiring process — from sourcing to onboarding.</p>
+
+    <div class="solutions-tabs">
+      <button class="stab active" onclick="switchTab('ats', this)">Mini ATS</button>
+      <button class="stab" onclick="switchTab('assisted', this)">Assisted Hiring</button>
+      <button class="stab" onclick="switchTab('leads', this)">Leads</button>
+    </div>
+
+    <div class="solutions-content">
+      <!-- ATS -->
+      <div class="sol-panel active" id="tab-ats">
+        <div class="sol-features">
+          <div class="sol-feature">
+            <div class="sol-icon">
+              <svg viewBox="0 0 24 24"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
+            </div>
+            <div>
+              <h4>AI-Powered Job Creation</h4>
+              <p>Generate structured job descriptions in minutes. Post to LinkedIn and major platforms instantly from one dashboard.</p>
+            </div>
+          </div>
+          <div class="sol-feature">
+            <div class="sol-icon">
+              <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div>
+              <h4>Smart Auto-Scoring & Auto-Reject</h4>
+              <p>Every candidate receives a customisable AI match score. Auto-reject candidates who don't meet non-negotiable criteria — zero manual effort.</p>
+            </div>
+          </div>
+          <div class="sol-feature">
+            <div class="sol-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div>
+              <h4>End-to-End 9-Stage Pipeline</h4>
+              <p>From "Applied" to "Hired" in one unified view. Integrated onboarding collects documents in an encrypted, audit-ready environment.</p>
+            </div>
+          </div>
+        </div>
+        <div class="sol-visual-box">
+          <div>
+            <div class="sol-viz-label">Mini ATS · Pipeline Overview</div>
+            <div class="sol-viz-heading">142 candidates.<br><span>38 shortlisted</span> by AI.</div>
+          </div>
+          <div class="funnel-stages">
+            <div class="funnel-row">
+              <span class="funnel-label" style="color:rgba(255,255,255,0.5); font-size:0.7rem;">Applied</span>
+              <div class="funnel-bar-bg"><div class="funnel-bar" style="width:100%; background:rgba(2,128,144,0.6);"></div></div>
+              <span class="funnel-count">142</span>
+            </div>
+            <div class="funnel-row">
+              <span class="funnel-label" style="color:rgba(255,255,255,0.5); font-size:0.7rem;">AI Screened</span>
+              <div class="funnel-bar-bg"><div class="funnel-bar" style="width:65%; background:var(--teal);"></div></div>
+              <span class="funnel-count">92</span>
+            </div>
+            <div class="funnel-row">
+              <span class="funnel-label" style="color:rgba(255,255,255,0.5); font-size:0.7rem;">Shortlisted</span>
+              <div class="funnel-bar-bg"><div class="funnel-bar" style="width:27%;"></div></div>
+              <span class="funnel-count">38</span>
+            </div>
+            <div class="funnel-row">
+              <span class="funnel-label" style="color:rgba(255,255,255,0.5); font-size:0.7rem;">Interviewing</span>
+              <div class="funnel-bar-bg"><div class="funnel-bar" style="width:8%; background:rgba(2,195,154,0.8);"></div></div>
+              <span class="funnel-count">11</span>
+            </div>
+            <div class="funnel-row">
+              <span class="funnel-label" style="color:rgba(255,255,255,0.5); font-size:0.7rem;">Hired</span>
+              <div class="funnel-bar-bg"><div class="funnel-bar" style="width:2%; background:var(--accent);"></div></div>
+              <span class="funnel-count">3</span>
+            </div>
+          </div>
+          <div style="display:flex; gap:0.75rem; margin-top:1.5rem; flex-wrap:wrap;">
+            <div style="background:rgba(2,195,154,0.1); border:1px solid rgba(2,195,154,0.3); border-radius:6px; padding:0.5rem 0.75rem; text-align:center;">
+              <div style="font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; color:var(--accent);">73%</div>
+              <div style="font-size:0.65rem; color:var(--muted);">Time saved</div>
+            </div>
+            <div style="background:rgba(2,128,144,0.1); border:1px solid rgba(2,128,144,0.3); border-radius:6px; padding:0.5rem 0.75rem; text-align:center;">
+              <div style="font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; color:var(--teal);">9</div>
+              <div style="font-size:0.65rem; color:var(--muted);">Pipeline stages</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:0.5rem 0.75rem; text-align:center;">
+              <div style="font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; color:rgba(255,255,255,0.7);">0</div>
+              <div style="font-size:0.65rem; color:var(--muted);">Manual screen calls</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Assisted Hiring -->
+      <div class="sol-panel" id="tab-assisted">
+        <div class="sol-features">
+          <div class="sol-feature">
+            <div class="sol-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+            </div>
+            <div>
+              <h4>Intelligent Intake & Sourcing</h4>
+              <p>We build a structured hiring profile from your JD, source from our database, job boards, and networks — all handled for you.</p>
+            </div>
+          </div>
+          <div class="sol-feature">
+            <div class="sol-icon">
+              <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <div>
+              <h4>AI Screening + Curated Shortlist</h4>
+              <p>Our engine evaluates and ranks candidates by skill, domain, and career progression. You receive a curated shortlist with AI match scores and interview readiness ratings.</p>
+            </div>
+          </div>
+          <div class="sol-feature">
+            <div class="sol-icon">
+              <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+            </div>
+            <div>
+              <h4>Managed Interview Coordination</h4>
+              <p>We handle scheduling, communication, and feedback tracking — reducing your workload by eliminating manual screening and initial outreach entirely.</p>
+            </div>
+          </div>
+        </div>
+        <div class="sol-visual-box">
+          <div>
+            <div class="sol-viz-label">Assisted Hiring · Workflow</div>
+            <div class="sol-viz-heading">AI + expert support.<br><span>Better talent, faster.</span></div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:0.75rem; margin-top:1.5rem;">
+            <div style="display:flex; align-items:center; gap:0.75rem; background:rgba(255,255,255,0.04); border-radius:8px; padding:0.65rem 0.85rem;">
+              <div style="width:28px;height:28px;border-radius:50%;background:rgba(2,128,144,0.2);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;color:var(--teal);flex-shrink:0;">1</div>
+              <div style="font-size:0.8rem;color:rgba(255,255,255,0.8);">Requirement intake &amp; JD structuring</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.75rem; background:rgba(255,255,255,0.04); border-radius:8px; padding:0.65rem 0.85rem;">
+              <div style="width:28px;height:28px;border-radius:50%;background:rgba(2,128,144,0.2);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;color:var(--teal);flex-shrink:0;">2</div>
+              <div style="font-size:0.8rem;color:rgba(255,255,255,0.8);">Intelligent multi-channel sourcing</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.75rem; background:rgba(2,195,154,0.08); border-radius:8px; padding:0.65rem 0.85rem; border:1px solid rgba(2,195,154,0.2);">
+              <div style="width:28px;height:28px;border-radius:50%;background:rgba(2,195,154,0.2);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;color:var(--accent);flex-shrink:0;">3</div>
+              <div style="font-size:0.8rem;color:rgba(255,255,255,0.9);">AI resume screening &amp; ranking</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.75rem; background:rgba(255,255,255,0.04); border-radius:8px; padding:0.65rem 0.85rem;">
+              <div style="width:28px;height:28px;border-radius:50%;background:rgba(2,128,144,0.2);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;color:var(--teal);flex-shrink:0;">4</div>
+              <div style="font-size:0.8rem;color:rgba(255,255,255,0.8);">Curated shortlist + interview coordination</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:0.75rem; margin-top:1.5rem;">
+            <div style="flex:1; background:rgba(2,195,154,0.1); border:1px solid rgba(2,195,154,0.3); border-radius:8px; padding:0.85rem; text-align:center;">
+              <div style="font-family:'Syne',sans-serif; font-size:1.3rem; font-weight:700; color:var(--accent);">40–60%</div>
+              <div style="font-size:0.7rem; color:var(--muted);">Faster hiring</div>
+            </div>
+            <div style="flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:0.85rem; text-align:center;">
+              <div style="font-family:'Syne',sans-serif; font-size:1.3rem; font-weight:700; color:rgba(255,255,255,0.7);">100%</div>
+              <div style="font-size:0.7rem; color:var(--muted);">Managed process</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leads -->
+      <div class="sol-panel" id="tab-leads">
+        <div class="sol-features">
+          <div class="sol-feature">
+            <div class="sol-icon">
+              <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <div>
+              <h4>Pre-Qualified Global Repository</h4>
+              <p>Access a curated pool of qualified candidates who are actively seeking their next role — even before you publish a job description. Zero cold-start.</p>
+            </div>
+          </div>
+          <div class="sol-feature">
+            <div class="sol-icon">
+              <svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+            </div>
+            <div>
+              <h4>Intent Signal Detection</h4>
+              <p>Our AI identifies "warm" talent by analysing recent resume updates, application patterns, and LinkedIn activity signals — so you reach candidates who are ready to move.</p>
+            </div>
+          </div>
+          <div class="sol-feature">
+            <div class="sol-icon">
+              <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div>
+              <h4>Credits-Based, On-Demand Access</h4>
+              <p>Select domain, years of experience, and volume needed. Receive a pre-qualified list instantly. Pay only for the profiles you actually unlock.</p>
+            </div>
+          </div>
+        </div>
+        <div class="sol-visual-box">
+          <div>
+            <div class="sol-viz-label">Leads · Smart Sourcing</div>
+            <div class="sol-viz-heading">Build your pipeline<br><span>before you post.</span></div>
+          </div>
+          <div style="margin-top:1.5rem; display:flex; flex-direction:column; gap:0.75rem;">
+            <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:1rem; border:1px solid rgba(2,195,154,0.15);">
+              <div style="font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.75rem;">High-Intent Lead Signals</div>
+              <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                <div style="display:flex; align-items:center; gap:0.6rem;">
+                  <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
+                  <span style="font-size:0.75rem;color:rgba(255,255,255,0.7);">Recent resume update on platform</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:0.6rem;">
+                  <div style="width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0;"></div>
+                  <span style="font-size:0.75rem;color:rgba(255,255,255,0.7);">Active job application patterns</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:0.6rem;">
+                  <div style="width:8px;height:8px;border-radius:50%;background:rgba(250,189,117,0.8);flex-shrink:0;"></div>
+                  <span style="font-size:0.75rem;color:rgba(255,255,255,0.7);">LinkedIn "still searching" detected</span>
+                </div>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem;">
+              <div style="background:rgba(2,195,154,0.08); border:1px solid rgba(2,195,154,0.2); border-radius:8px; padding:0.85rem; text-align:center;">
+                <div style="font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:700; color:var(--accent);">Day 0</div>
+                <div style="font-size:0.68rem; color:var(--muted);">Pipeline ready</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:0.85rem; text-align:center;">
+                <div style="font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:700; color:rgba(255,255,255,0.7);">Credits</div>
+                <div style="font-size:0.68rem; color:var(--muted);">Pay per profile</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW SECTION -->
+<section class="workflow-section" id="workflow">
+  <div class="container">
+    <span class="section-label">End-to-End Workflow</span>
+    <h2 class="section-heading">From job post to<br>onboarded hire.</h2>
+    <p class="section-sub">Every stage of the recruitment lifecycle is handled in one place — no spreadsheets, no email chains, no missed follow-ups.</p>
+    <div class="workflow-steps">
+      <div class="wstep">
+        <div class="wstep-phase">Phase 1</div>
+        <div class="wstep-num">1</div>
+        <div class="wstep-title">Job Launchpad</div>
+        <div class="wstep-desc">AI-assisted JD creation. Post to LinkedIn and major platforms in minutes.</div>
+      </div>
+      <div class="wstep">
+        <div class="wstep-phase">Phase 2</div>
+        <div class="wstep-num">2</div>
+        <div class="wstep-title">Smart Sourcing</div>
+        <div class="wstep-desc">Access global repository. AI-suggested candidates appear instantly on job creation.</div>
+      </div>
+      <div class="wstep">
+        <div class="wstep-phase">Phase 3</div>
+        <div class="wstep-num">3</div>
+        <div class="wstep-title">Intelligent Screening</div>
+        <div class="wstep-desc">Auto-reject unqualified. GenAI pre-assessments filter for skill and culture fit.</div>
+      </div>
+      <div class="wstep">
+        <div class="wstep-phase">Phase 4</div>
+        <div class="wstep-num">4</div>
+        <div class="wstep-title">Precision Ranking</div>
+        <div class="wstep-desc">Customisable AI match score. Best talent rises to the top automatically.</div>
+      </div>
+      <div class="wstep">
+        <div class="wstep-phase">Phase 5</div>
+        <div class="wstep-num">5</div>
+        <div class="wstep-title">Interview Assistant</div>
+        <div class="wstep-desc">JD-mapped questions, structured feedback loops, and scorecards in one view.</div>
+      </div>
+      <div class="wstep">
+        <div class="wstep-phase">Phase 6</div>
+        <div class="wstep-num">6</div>
+        <div class="wstep-title">Encrypted Onboarding</div>
+        <div class="wstep-desc">Collect, track, and store compliance documents. Seamless close-of-hire.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON SECTION -->
+<section class="comparison-section" id="compare">
+  <div class="container">
+    <span class="section-label">Why flexiResume</span>
+    <h2 class="section-heading">Built for lean teams,<br>not enterprise budgets.</h2>
+    <p class="section-sub">Compare flexiResume against the traditional approaches that are slowing down your hiring today.</p>
+    <div class="comparison-table-wrap">
+      <table class="comp">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Manual Process</th>
+            <th>Enterprise ATS</th>
+            <th>✦ flexiResume</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sourcing</td>
+            <td>Post &amp; wait; manual email tracking</td>
+            <td>Expensive pay-per-click job boards</td>
+            <td class="col-highlight">Pre-qualified global pool via Leads</td>
+          </tr>
+          <tr>
+            <td>Resume Reusability</td>
+            <td>Lost in email folders</td>
+            <td>Stored but unsearchable</td>
+            <td class="col-highlight">AI-suggested for every new job</td>
+          </tr>
+          <tr>
+            <td>Screening</td>
+            <td>Hours reading resumes, high bias risk</td>
+            <td>Complex Boolean search, steep learning curve</td>
+            <td class="col-highlight">Auto-pilot AI scoring + auto-reject</td>
+          </tr>
+          <tr>
+            <td>User Experience</td>
+            <td>Messy Excel + email chaos</td>
+            <td>Feature bloat, high training overhead</td>
+            <td class="col-highlight">Slim, intuitive — zero training needed</td>
+          </tr>
+          <tr>
+            <td>Interviews</td>
+            <td>Inconsistent questions, lost feedback</td>
+            <td>High per-seat pricing</td>
+            <td class="col-highlight">Built-in assistant with JD + AI questions</td>
+          </tr>
+          <tr>
+            <td>Onboarding</td>
+            <td>Manual document chasing via email</td>
+            <td>Expensive add-on module required</td>
+            <td class="col-highlight">Built-in encrypted doc collection</td>
+          </tr>
+          <tr>
+            <td>Cost</td>
+            <td>Hidden costs in lost hours</td>
+            <td>$5k–$20k+ annual contracts</td>
+            <td class="col-highlight">Optimised ROI · credits-based model</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY SECTION -->
+<section class="security-section" id="security">
+  <div class="container">
+    <span class="section-label">Security & Privacy</span>
+    <h2 class="section-heading">Your data is your<br>competitive edge.</h2>
+    <p class="section-sub">Your talent pool stays yours alone. flexiResume is built on total data isolation — your repository is never shared, cross-sold, or accessed by anyone outside your team.</p>
+    <div class="security-grid">
+      <div class="sec-card">
+        <div class="sec-card-icon">🔐</div>
+        <h3>Total Data Isolation</h3>
+        <p>All uploaded resumes and applicant data are stored in your private Global Repository — completely separate from other clients' databases. Your competitive advantage stays secure.</p>
+      </div>
+      <div class="sec-card">
+        <div class="sec-card-icon">🔒</div>
+        <h3>Encrypted Storage</h3>
+        <p>All personal documents and candidate data are stored in encrypted format. Personal documents are auto-deleted after the required compliance period, assisting with privacy regulations.</p>
+      </div>
+      <div class="sec-card">
+        <div class="sec-card-icon">📋</div>
+        <h3>Audit Readiness</h3>
+        <p>Our system maintains a complete document trail for any future audits regarding your hiring process. Every stage is logged, timestamped, and accessible to your authorized team only.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section" id="contact">
+  <div class="container">
+    <span class="section-label">Early Access Program</span>
+    <h2 class="section-heading">Join our charter partner program.</h2>
+    <p class="section-sub">We're inviting a select group of forward-thinking companies to shape flexiResume with us. Get white-glove onboarding, tailored AI workflows, and priority access.</p>
+    <div class="cta-actions">
+      <a href="mailto:support@flexiresume.com" class="btn-cta-primary">Request Early Access</a>
+      <a href="https://www.flexiresume.com" target="_blank" class="btn-cta-secondary">Visit Website →</a>
+    </div>
+    <div class="cta-email">Or reach us directly at <a href="mailto:support@flexiresume.com">support@flexiresume.com</a></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">flexi<span>Resume</span></div>
+  <p style="font-size:0.8rem; max-width:400px; margin: 0 auto 1rem;">An AI-powered hiring management platform built specifically for startups and growing businesses.</p>
+  <div class="footer-links">
+    <a href="#solutions">Solutions</a>
+    <a href="#workflow">How it Works</a>
+    <a href="#compare">Compare</a>
+    <a href="#security">Security</a>
+    <a href="mailto:support@flexiresume.com">Contact</a>
+    <a href="https://www.flexiresume.com" target="_blank">flexiresume.com</a>
+  </div>
+  <p style="font-size:0.75rem; color:rgba(255,255,255,0.2);">© 2026 flexiResume. All rights reserved.</p>
+</footer>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.sol-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
